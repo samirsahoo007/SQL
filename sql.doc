@@ -10,6 +10,7 @@ UPDATE Customers SET ContactName='Juan' WHERE Country='Mexico';
 DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste'; => deletes the customer "Alfreds Futterkiste" from the "Customers" table
 DELETE FROM Customers; => deletes all rows in the "Customers" table, without deleting the table
 
+![alt text](https://www.w3schools.com/sql/img_rightjoin.gif) 
 ############## selects the first three records from the "Customers" table ##################
 SELECT TOP 3 * FROM Customers;
 SELECT * FROM Customers LIMIT 3;
