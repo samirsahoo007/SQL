@@ -37,7 +37,23 @@ SELECT * FROM Customers WHERE City LIKE '[a-c]%';       => selects all customers
 SELECT * FROM Customers WHERE City LIKE '[!bsp]%';      =>  select all customers with a City NOT starting with "b", "s", or "p"
 SELECT * FROM Customers WHERE City NOT LIKE '[bsp]%';   => City NOT starting with "b", "s", or "p"
 
+SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK'); => selects all customers that are NOT located in "Germany", "France" or "UK"
+SELECT * FROM Customers WHERE Country IN (SELECT Country FROM Suppliers);
 
+SELECT * FROM Products WHERE Price BETWEEN 10 AND 20;
+SELECT * FROM Products WHERE Price NOT BETWEEN 10 AND 20;
+
+# selects all products with a ProductName BETWEEN 'Carnarvon Tigers' and 'Mozzarella di Giovanni'
+SELECT * FROM Products WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni' ORDER BY ProductName;
+
+############## selects all orders with an OrderDate BETWEEN '01-July-1996' and '31-July-1996' ##############
+SELECT * FROM Orders WHERE OrderDate BETWEEN #01/07/1996# AND #31/07/1996#;
+SELECT * FROM Orders WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
+############## both of the above are same #######################
+
+SELECT CustomerID AS ID, CustomerName AS Customer FROM Customers;                   => creating alias
+SELECT CustomerName AS Customer, ContactName AS [Contact Person] FROM Customers;    => creates two aliases
+SELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS Address FROM Customers; => combine four columns
 
 
 SELECT DISTINCT Country FROM Customers;            => selects only the DISTINCT values
