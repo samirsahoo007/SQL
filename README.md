@@ -1,6 +1,6 @@
 # SQL
 
-[alt text](https://www.w3schools.com/sql/img_rightjoin.gif) 
+![alt text](https://www.w3schools.com/sql/img_rightjoin.gif) 
 
 select * from auth_user limit 10;	=> show first 10 records
 select * from auth_user limit 10,10;	=> show next 10 records i.e. from 10 to next 10 records
