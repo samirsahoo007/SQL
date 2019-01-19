@@ -223,6 +223,16 @@ gender      COUNT('membership_number')
 Female	      3
 Male	        5
 
+CREATE DATABASE testDB;
+DROP DATABASE testDB;
+BACKUP DATABASE testDB TO DISK = 'D:\backups\testDB.bak';   # creates a full back up of the existing database "testDB" to the D disk
+
+# The following SQL statement creates a differential back up of the database "testDB". 
+# A differential back up reduces the back up time (since only the changes are backed up).
+BACKUP DATABASE testDB TO DISK = 'D:\backups\testDB.bak' WITH DIFFERENTIAL;
+
+
+
 DDL(Data Definition Language) statements are used to define the database structure or schema. Some examples:
 o	CREATE - to create objects in the database
 o	ALTER - alters the structure of the database
