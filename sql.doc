@@ -1,3 +1,35 @@
+(INNER) JOIN: Returns records that have matching values in both tables
+LEFT (OUTER) JOIN: Return all records from the left table, and the matched records from the right table
+RIGHT (OUTER) JOIN: Return all records from the right table, and the matched records from the left table
+FULL (OUTER) JOIN: Return all records when there is a match in either left or right table
+
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+### SQL statement matches customers that are from the same city. A self JOIN is a regular join, but the table is joined with itself.
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City 
+ORDER BY A.City;
+
+
 select * from auth_user limit 10;	=> show first 10 records
 select * from auth_user limit 10,10;	=> show next 10 records i.e. from 10 to next 10 records
 or
@@ -10,7 +42,6 @@ UPDATE Customers SET ContactName='Juan' WHERE Country='Mexico';
 DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste'; => deletes the customer "Alfreds Futterkiste" from the "Customers" table
 DELETE FROM Customers; => deletes all rows in the "Customers" table, without deleting the table
 
-![alt text](https://www.w3schools.com/sql/img_rightjoin.gif) 
 ############## selects the first three records from the "Customers" table ##################
 SELECT TOP 3 * FROM Customers;
 SELECT * FROM Customers LIMIT 3;
@@ -23,6 +54,10 @@ SELECT MAX(Price) AS LargestPrice FROM Products;          => finds the price of 
 SELECT COUNT(ProductID) FROM Products;   =>   finds the number of products
 SELECT AVG(Price) FROM Products;         =>   finds the average price of all products
 SELECT SUM(Quantity) FROM OrderDetails;  =>   finds the sum of the "Quantity" fields in the "OrderDetails" table
+
+# The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.
+# The following SQL statement lists the number of customers in each country:
+SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country;         # See below for better understanding
 
 # % - The percent sign represents zero, one, or multiple characters
 # _ - The underscore represents a single character
@@ -47,6 +82,56 @@ SELECT * FROM Products WHERE Price NOT BETWEEN 10 AND 20;
 # selects all products with a ProductName BETWEEN 'Carnarvon Tigers' and 'Mozzarella di Giovanni'
 SELECT * FROM Products WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni' ORDER BY ProductName;
 
+# The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
+# The following SQL statement lists the number of customers in each country. Only include countries with more than 5 customers:
+SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country HAVING COUNT(CustomerID) > 5;
+
+# The EXISTS operator is used to test for the existence of any record in a subquery.
+# The EXISTS operator returns true if the subquery returns one or more records.
+# The following SQL statement returns TRUE and lists the suppliers with a product price less than 20;
+SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products WHERE SupplierId = Suppliers.supplierId AND Price < 20);
+
+# The ANY and ALL operators are used with a WHERE or HAVING clause.
+# The ANY operator returns true if any of the subquery values meet the condition.
+# The ALL operator returns true if all of the subquery values meet the condition.
+# Note: The operator must be a standard comparison operator (=, <>, !=, >, >=, <, or <=).
+SELECT ProductName
+FROM Products
+WHERE ProductID = ANY (SELECT ProductID FROM OrderDetails WHERE Quantity > 99);
+
+SELECT ProductName
+FROM Products
+WHERE ProductID = ALL (SELECT ProductID FROM OrderDetails WHERE Quantity = 10);
+
+# The SELECT INTO statement copies data from one table into a new table.
+SELECT CustomerName, ContactName INTO CustomersBackup2017 FROM Customers;
+SELECT * INTO CustomersGermany FROM Customers WHERE Country = 'Germany';
+
+# Tip: SELECT INTO can also be used to create a new, empty table using the schema of another. Just add a WHERE clause that causes the query to return no data:
+SELECT * INTO newtable FROM oldtable WHERE 1 = 0;
+
+# The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+# INSERT INTO SELECT requires that data types in source and target tables match.
+# The existing records in the target table are unaffected.
+# The following SQL statement copies "Suppliers" into "Customers" (the columns that are not filled with data, will contain NULL):
+
+INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers;
+
+# The CASE statement goes through conditions and return a value when the first condition is met 
+# (like an IF-THEN-ELSE statement). So, once a condition is true, it will stop reading and return the result. 
+# If no conditions are true, it returns the value in the ELSE clause.
+SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN "The quantity is greater than 30"
+    WHEN Quantity = 30 THEN "The quantity is 30"
+    ELSE "The quantity is under 30"
+END AS QuantityText
+FROM OrderDetails;
+
+If there is no ELSE part and no conditions are true, it returns NULL.
 ############## selects all orders with an OrderDate BETWEEN '01-July-1996' and '31-July-1996' ##############
 SELECT * FROM Orders WHERE OrderDate BETWEEN #01/07/1996# AND #31/07/1996#;
 SELECT * FROM Orders WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
@@ -62,7 +147,82 @@ SELECT * FROM Customers WHERE Country='Germany' AND City='Berlin';
 SELECT * FROM Customers WHERE Country='Germany' OR City='Berlin';
 SELECT CustomerName, ContactName, Address FROM Customers WHERE Address IS NOT NULL;
 
- 
+# SQL statement returns the cities (only distinct values) from both the "Customers" and the "Suppliers" table
+SELECT City FROM Customers 
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;
+
+# returns the cities (duplicate values also) from both the "Customers" and the "Suppliers" table
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;
+
+# SQL IFNULL(), ISNULL(), COALESCE(), and NVL() Functions
+Look at the following "Products" table:
+
+P_Id	   ProductName	   UnitPrice	   UnitsInStock	   UnitsOnOrder
+====    ===========    =========    ============    ============
+1	       Jarlsberg	     10.45	       16	             15
+2	       Mascarpone	    32.56	       23	 
+3	       Gorgonzola	    15.67	       9	              20
+
+# Suppose that the "UnitsOnOrder" column is optional, and may contain NULL values.
+# Look at the following SELECT statement:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + UnitsOnOrder)
+FROM Products;
+
+# In the example above, if any of the "UnitsOnOrder" values are NULL, the result will be NULL.
+# The MySQL IFNULL() function lets you return an alternative value if an expression is NULL:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0))
+FROM Products
+
+# or we can use the COALESCE() function, like this:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))
+FROM Products
+
+# Single Line Comments start with --
+--SELECT * FROM Customers;
+SELECT * FROM Products;
+SELECT * FROM Customers -- WHERE City='Berlin';
+
+# Multi-line comments start with /* and end with */.
+/*Select all the columns
+of all the records
+in the Customers table:*/
+SELECT * FROM Customers;
+
+SELECT `gender` FROM `members` ;
+gender
+======
+Female
+Female
+Male
+Female
+Male
+Male
+Male
+Male
+Male
+
+Suppose we want to get the unique values for genders. We can use a following query -
+
+SELECT `gender` FROM `members` GROUP BY `gender`;
+gender
+======
+Female
+Male
+
+SELECT `gender`,COUNT(`membership_number`)  FROM `members` GROUP BY `gender`;
+gender      COUNT('membership_number')
+======      ==========================
+Female	      3
+Male	        5
+
 DDL(Data Definition Language) statements are used to define the database structure or schema. Some examples:
 o	CREATE - to create objects in the database
 o	ALTER - alters the structure of the database
@@ -269,6 +429,7 @@ Note: For INNER joins the order doesn't matter
 For (LEFT, RIGHT or FULL) OUTER joins,the order matter
 Ref: https://stackoverflow.com/questions/5706437/whats-the-difference-between-inner-join-left-join-right-join-and-full-join
 Difference between view and stored procedures and Triggers:
+
 Stored Procedure
 •	Stored Procedure can have multiple select statement
 •	Stored Procedure exists in database
