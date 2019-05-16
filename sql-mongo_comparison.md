@@ -10,27 +10,27 @@
 $ mongo --host localhost:27017<br>
 
 \> show dbs<br>
-> use testdb<br>
-> use testdb;<br>
-> db.createCollection("user")<br>
-> show collections<br>
-> show tables<br>
-> db.getCollectionNames<br>
-function () {<br>
-        return this.getCollectionInfos({}, true, true).map(function(infoObj) {<br>
-            return infoObj.name;<br>
-        });<br>
-    }<br>
-> db.getCollectionNames()<br>
-[ "user" ]<br>
-> db.user.find()<br>
-> db.use.find().pretty()<br>
-> db.user.find({"username": "ssamir"})<br>
-> db.user.find({"username": "ssamir", "location": "hyderabad"})<br>
-> db.user.drop()<br>
+\> use testdb<br>
+\> use testdb;<br>
+\> db.createCollection("user")<br>
+\> show collections<br>
+\> show tables<br>
+\> db.getCollectionNames<br>
+&nbsp;&nbsp;&nbsp;function () {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return this.getCollectionInfos({}, true, true).map(function(infoObj) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return infoObj.name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+\> db.getCollectionNames()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ "user" ]<br>
+\> db.user.find()<br>
+\> db.use.find().pretty()<br>
+\> db.user.find({"username": "ssamir"})<br>
+\> db.user.find({"username": "ssamir", "location": "hyderabad"})<br>
+\> db.user.drop()<br>
 
-> db.createUser({"user": "ajitesh", "pwd": "gurukul", "roles": ["readWrite", "dbAdmin"]})						# Create users<br>
-> show users<br>
+\> db.createUser({"user": "ajitesh", "pwd": "gurukul", "roles": ["readWrite", "dbAdmin"]})						# Create users<br>
+\> show users<br>
 
 Login into the database with username and password:<br>
 
