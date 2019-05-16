@@ -9,7 +9,7 @@
 <p>$ brew install mongodb<br>
 $ mongo --host localhost:27017<br>
 
->> show dbs<br>
+\> show dbs<br>
 > use testdb<br>
 > use testdb;<br>
 > db.createCollection("user")<br>
