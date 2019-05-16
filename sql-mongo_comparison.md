@@ -3,6 +3,47 @@
 <h1>SQL to MongoDB Mapping Chart<a class="headerlink" href="#sql-to-mongodb-mapping-chart" title="Permalink to this headline">¶</a></h1>
 <p>In addition to the charts that follow, you might want to consider the
 <a class="reference internal" href="../../faq/"><em>Frequently Asked Questions</em></a> section for a selection of common questions about MongoDB.</p>
+
+<div class="section" id="basic_commands">
+<h2>Installation and Basic commands<a class="headerlink" href="#basic_commands" title="Permalink to this headline">¶</a></h2>
+<p>
+$ brew install mongodb
+$ mongo --host localhost:27017
+
+> show dbs
+> use testdb
+> use testdb;
+> db.createCollection("user")
+> show collections
+> show tables
+> db.getCollectionNames
+function () {
+        return this.getCollectionInfos({}, true, true).map(function(infoObj) {
+            return infoObj.name;
+        });
+    }
+> db.getCollectionNames()
+[ "user" ]
+> db.user.find()
+> db.use.find().pretty()
+> db.user.find({"username": "ssamir"})
+> db.user.find({"username": "ssamir", "location": "hyderabad"})
+> db.user.drop()
+
+> db.createUser({"user": "ajitesh", "pwd": "gurukul", "roles": ["readWrite", "dbAdmin"]})						# Create users
+> show users
+
+Login into the database with username and password:
+
+$ mongo -u USERNAME -p PASSWORD --authenticationDatabase DATABASENAME
+e.g.
+$ mongo -u samir -p mypassword --authenticationDatabase testdb
+</p>
+<table border="1" class="docutils">
+<tbody valign="top">
+</tbody>
+</table>
+</div>
 <div class="section" id="executables">
 <h2>Executables<a class="headerlink" href="#executables" title="Permalink to this headline">¶</a></h2>
 <p>The following table presents the MySQL/Oracle executables and the
