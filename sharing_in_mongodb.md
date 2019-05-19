@@ -832,6 +832,12 @@ Employee collection, issue the below command
 Sh.shardCollection(\"db.Employee\" , { \"Employeeid\" : 1 ,
 \"EmployeeName\" : 1})
 
+*Create backup / Dump MongoDB data*
+
+>mongodump
+
+The command will connect to the server running at 127.0.0.1 and port 27017 and back all data of the server to directory /bin/dump/.
+
 Summary:
 
 • As explained in tutorial, Sharding is a concept in MongoDB, which
