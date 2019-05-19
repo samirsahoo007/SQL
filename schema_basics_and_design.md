@@ -1,4 +1,6 @@
-Schema Basics
+Ref: http://learnmongodbthehardway.com/schema/schemadesign/
+
+**Schema Basics**
 
 Before exploring the more advanced schemas in this book it's important
 to revisit schema basics. In this chapter we will explore the basic
