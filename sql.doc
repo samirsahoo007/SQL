@@ -29,6 +29,37 @@ WHERE A.CustomerID <> B.CustomerID
 AND A.City = B.City 
 ORDER BY A.City;
 
+Note:
+A self join allows you to join a table to itself. It is useful for querying hierarchical data or comparing rows within the same table.
+
+You use a self join when a table references data in itself.
+
+E.g., an Employee table may have a SupervisorID column that points to the employee that is the boss of the current employee.
+
+To query the data and get information for both people in one row, you could self join like this:
+
+select e1.EmployeeID, 
+    e1.FirstName, 
+    e1.LastName,
+    e1.SupervisorID, 
+    e2.FirstName as SupervisorFirstName, 
+    e2.LastName as SupervisorLastName
+from Employee e1
+left outer join Employee e2 on e1.SupervisorID = e2.EmployeeID
+
+Well, one classic example is where you wanted to get a list of employees and their immediate managers:
+
+select e.employee as employee, b.employee as boss
+from emptable e, emptable b
+where e.manager_id = b.empolyee_id
+order by 1
+
+It's basically used where there is any relationship between rows stored in the same table.
+
+employees.
+multi-level marketing.
+machine parts.
+
 
 select * from auth_user limit 10;	=> show first 10 records
 select * from auth_user limit 10,10;	=> show next 10 records i.e. from 10 to next 10 records
