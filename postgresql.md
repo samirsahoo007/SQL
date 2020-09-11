@@ -2,15 +2,19 @@
 
 $ brew install postgresql
 
-$ brew install gdal					      # for ogr2ogr
+$ brew install gdal					                # for ogr2ogr
 
-$ brew services start postgresql	# Start the service
+$ brew services start postgresql	          # Start the service; restart at login
 
-$ psql postgres	                  # Connect to the default postgres database to check whether it's setup correctly
+OR
 
-$ createdb my_test_db	            # Create new database
+$ pg_ctl -D /usr/local/var/postgres start   # if you don't want/need a background service
 
-$ psql my_test_db                 # Connect to the database
+$ psql postgres	                            # Connect to the default postgres database to check whether it's setup correctly
+
+$ createdb my_test_db	                      # Create new database
+
+$ psql my_test_db                           # Connect to the database
 
 
 # Few Useful commands:
