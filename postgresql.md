@@ -47,17 +47,20 @@ for field in $(echo $INDEX_FIELDS | tr ',' '\n')
   done
   ```
 
--- Import CSV into table t_words
-COPY t_words FROM '/path/to/file.csv' DELIMITER ',' CSV;
--- You can tell quote char with QUOTE
--- and change delimiter with DELIMITER
+## Import CSV into table t_words
 
--- Import CSV into table t_words,
--- telling what columns to use
+COPY t_words FROM '/path/to/file.csv' DELIMITER ',' CSV;
+
+* You can tell quote char with QUOTE and change delimiter with DELIMITER
+
+## Import CSV into table t_words, telling what columns to use
+
 COPY t_words("name", "count", "def") FROM 'file.csv' DELIMITER ',' CSV; 
 
--- Export table to a CSV file
+## Export table to a CSV file
+
 COPY t_words TO 'file.csv' DELIMITER ',' CSV HEADER; 
 
--- Export custom results to a CSV file
+## Export custom results to a CSV file
+
 COPY (SELECT word, def FROM t_words) TO 'file.csv' CSV;
