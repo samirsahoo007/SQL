@@ -67,6 +67,7 @@ multi-level marketing.
 machine parts.
 
 
+
 SELECT * FROM CUSTOMERS WHERE SALARY = 2000;		=> do not use ==; it's = here
 SELECT * FROM CUSTOMERS WHERE SALARY != 2000;	and 	SELECT * FROM CUSTOMERS WHERE SALARY <> 2000;	returns same result
 SELECT * FROM CUSTOMERS WHERE SALARY >= 6500;
@@ -86,6 +87,23 @@ DELETE FROM Customers; => deletes all rows in the "Customers" table, without del
 SELECT TOP 3 * FROM Customers;
 SELECT * FROM Customers LIMIT 3;
 SELECT * FROM Customers WHERE ROWNUM <= 3;
+
+SELECT name, MAX(salary) as salary FROM employee		# highest salary
+
+# Second highest salary in database table name as Emp
+SELECT MIN(SALARY) FROM   
+(SELECT DISTINCT SALARY FROM EMP ORDER BY SALARY DESC)   
+WHERE ROWNUM < 3;  
+
+# In order to calculate the second highest salary use rownum < 3  
+# In order to calculate the third highest salary use rownum < 4  
+
+OR
+
+SELECT name, MAX(salary) AS salary
+  FROM employee
+ WHERE salary < (SELECT MAX(salary) FROM employee); 
+
 ##################### the above three are the same ##########################################
 SELECT TOP 50 PERCENT * FROM Customers; => selects the first 50% of the records from the "Customers" table
 SELECT MIN(Price) AS SmallestPrice FROM Products;         => finds the price of the cheapest product
@@ -96,6 +114,7 @@ SELECT AVG(Price) FROM Products;         =>   finds the average price of all pro
 SELECT SUM(Quantity) FROM OrderDetails;  =>   finds the sum of the "Quantity" fields in the "OrderDetails" table
 
 # The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.
+# GROUP BY clause is a SQL command that is used to group rows that have the same values. 
 # The following SQL statement lists the number of customers in each country:
 SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country;         # See below for better understanding
 
