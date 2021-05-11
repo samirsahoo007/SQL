@@ -34,6 +34,10 @@ A self join allows you to join a table to itself. It is useful for querying hier
 
 You use a self join when a table references data in itself.
 
+Que: Difference between SQL Not Equal Operator <> and !=
+Ans: We can use both SQL Not Equal operators <> and != to do inequality test between two expressions. Both operators give the same output. The only difference is that ‘<>’ is in line with the ISO standard while ‘!=’ does not follow ISO standard. You should use <> operator as it follows the ISO standard.
+
+
 E.g., an Employee table may have a SupervisorID column that points to the employee that is the boss of the current employee.
 
 To query the data and get information for both people in one row, you could self join like this:
@@ -61,6 +65,9 @@ multi-level marketing.
 machine parts.
 
 
+SELECT * FROM CUSTOMERS WHERE SALARY = 2000;		=> do not use ==; it's = here
+SELECT * FROM CUSTOMERS WHERE SALARY != 2000;	and 	SELECT * FROM CUSTOMERS WHERE SALARY <> 2000;	returns same result
+SELECT * FROM CUSTOMERS WHERE SALARY >= 6500;
 select * from auth_user limit 10;	=> show first 10 records
 select * from auth_user limit 10,10;	=> show next 10 records i.e. from 10 to next 10 records
 or
