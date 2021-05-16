@@ -3,7 +3,10 @@
 ![alt text](https://www.w3schools.com/sql/img_innerjoin.gif) ![alt text](https://www.w3schools.com/sql/img_leftjoin.gif) ![alt text](https://www.w3schools.com/sql/img_rightjoin.gif) ![alt text](https://www.w3schools.com/sql/img_fulljoin.gif)
 
 
-# 8 ways to fine tune sql queries in production databases
+
+
+
+## 8 ways to fine tune sql queries in production databases
 
 1. Define business requirements first
 2. SELECT fields instead of using SELECT *
